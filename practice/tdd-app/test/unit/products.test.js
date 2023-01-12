@@ -1,9 +1,14 @@
-describe("Calculation", ()=>{
-  test('two plus two is four', ()=>{
-    expect(2 + 2).toBe(4);
+const productController = require('../../controller/products');
+const productModel = require('../../models/Products');
+
+productModel.create = jest.fn();
+
+describe("Product Controller Create", ()=>{
+  it("should have a createProduct function", ()=>{
+    expect(typeof productController.createProduct).toBe("function");
   })
-  
-  test('two plus two is not five', ()=>{
-    expect(2 + 2).not.toBe(5);
+  it("should call ProductModel.create", ()=>{
+    productController.createProduct();
+    expect(productModel.create).toBeCalled();
   })
 })
