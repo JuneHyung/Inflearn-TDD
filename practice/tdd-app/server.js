@@ -10,14 +10,16 @@ const productRoutes = require('./routes');
 
 const mongoose = require('mongoose');
 
+mongoose.set('strictQuery', false);
 mongoose.connect('mongodb+srv://cjh951114:qwer1234@cluster0.g1y6vym.mongodb.net/hello?retryWrites=true&w=majority', 
 {
     useNewUrlParser: true,
 }).then(()=> console.log('MongoDb Connected ...'))
 .catch(err => console.log(err));
 
-app.use("/api/products", productRoutes);
+
 app.use(express.json()); // bodyParser를 대체할 express의 미들웨어 함수
+app.use("/api/products", productRoutes);
 app.get('/', (req, res) => { // '/'로 요청이 오면 Hello World를 전달
     res.send('Hello World');
 })
