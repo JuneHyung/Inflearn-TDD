@@ -27,3 +27,13 @@ app.get('/', (req, res) => { // '/'로 요청이 오면 Hello World를 전달
 // app.listen(PORT, HOST); // 해당 포트와 호스트에서 HTTP서버를 시작
 app.listen(PORT);
 // console.log(`Running on http://${HOST}:${PORT}`);
+
+
+
+// Error Handler
+app.use((error, req, res, next)=>{
+    res.status(500).json({message: error.message});
+})
+
+
+module.exports = app;
