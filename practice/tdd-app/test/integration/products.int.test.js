@@ -4,7 +4,7 @@ const newProduct = require("../data/new-product.json");
 
 let firstProduct;
 
-it("Post /api/products", async ()=>{
+it("POST /api/products", async ()=>{
   const response = await request(app)
     .post("/api/products")
     .send(newProduct)
@@ -42,7 +42,25 @@ it("GET /api/product/:productId", async ()=>{
     expect(response.body.description).toBe(firstProduct.description)
 })
 
-it("Get id doesnt exist /api/product/:productId", async()=>{
+it("GET id doesnt exist /api/product/:productId", async()=>{
   const response = await request(app).get('/api/products/63cfaf90f5bc045472cb2577')
   expect(response.statusCode).toBe(404);
+})
+
+
+
+it("PUT /api/products", async () => {
+  const res = await request(app)
+      .put(`/api/products/${firstProduct._id}`)
+      .send({ name: "updated name", description: "updated desription" });
+  expect(res.statusCode).toBe(200)
+  expect(res.body.name).toBe("updated name")
+  expect(res.body.description).toBe("updated desription")
+})
+
+it("should return 404 on PUT /api/products", async () => {
+  const res = await request(app)
+      .put('/api/products/63cfaf90f5bc045472cb2599')
+      .send({ name: "updated name", description: "updated desription" })
+  expect(res.statusCode).toBe(404);
 })
